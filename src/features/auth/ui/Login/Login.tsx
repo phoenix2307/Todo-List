@@ -1,7 +1,7 @@
 import { selectThemeMode } from "@/app/app-slice"
-import { useAppSelector } from "@/common/hooks"
+import {useAppDispatch, useAppSelector} from "@/common/hooks"
 import { getTheme } from "@/common/theme"
-import { type Inputs, loginSchema } from "@/features/auth/lib/schemas"
+import { type LoginInputs, loginSchema } from "@/features/auth/lib/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Button from "@mui/material/Button"
 import Checkbox from "@mui/material/Checkbox"
@@ -13,11 +13,13 @@ import Grid from "@mui/material/Grid2"
 import TextField from "@mui/material/TextField"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
 import styles from "./Login.module.css"
+import {loginTC} from "@/features/auth/model/auth-slice";
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
-
   const theme = getTheme(themeMode)
+
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -25,14 +27,14 @@ export const Login = () => {
     reset,
     control,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm<LoginInputs>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "", rememberMe: false },
   })
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data)
-    reset()
+  const onSubmit: SubmitHandler<LoginInputs> = (data) => {
+      dispatch(loginTC(data))
+    // reset()
   }
 
   return (
