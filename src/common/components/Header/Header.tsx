@@ -12,6 +12,7 @@ import Toolbar from "@mui/material/Toolbar"
 import LinearProgress from "@mui/material/LinearProgress"
 import {ButtonLink} from "@/common/components/ButtonLink/ButtonLink";
 import {logoutTC, selectIsLoggedIn} from "@/features/auth/model/auth-slice";
+import {clearDataAC} from "@/common/actions";
 
 export const Header = () => {
     const themeMode = useAppSelector(selectThemeMode)
@@ -27,6 +28,7 @@ export const Header = () => {
 
     const signOutHandler = () => {
         dispatch(logoutTC())
+        dispatch(clearDataAC())
     }
 
     return (
