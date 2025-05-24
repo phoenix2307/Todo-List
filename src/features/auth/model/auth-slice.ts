@@ -63,10 +63,34 @@ export const authSlice = createAppSlice({
                     state.isLoggedIn = action.payload.isLoginIn
                 },
             },
-        )
+        ),
+        initializeAppTC: creator.asyncThunk(
+            async (_, {dispatch, rejectWithValue}) => {
+                try {
+                    dispatch(setAppStatusAC({ status: "loading" }))
+                    const res = await authApi.me()
+
+                    if (res.data.resultCode === ResultCode.Success) {
+                        dispatch(setAppStatusAC({ status: "succeeded" }))
+                        return {isLoginIn: true}
+                    } else {
+                        handleServerAppError(res.data, dispatch)
+                        return rejectWithValue(null)
+                    }
+                } catch (error) {
+                    handleServerNetworkError(dispatch, error)
+                    return rejectWithValue(null)
+                }
+            },
+            {
+                fulfilled: (state, action) => {
+                    state.isLoggedIn = action.payload.isLoginIn
+                },
+            },
+        ),
     })
 })
 
 export const {selectIsLoggedIn} = authSlice.selectors
-export const {loginTC, logoutTC} = authSlice.actions
+export const {loginTC, logoutTC, initializeAppTC} = authSlice.actions
 export const authReducer = authSlice.reducer
