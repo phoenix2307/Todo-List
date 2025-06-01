@@ -26,21 +26,20 @@ export const Login = () => {
 
   const [login] = useLoginMutation()
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const {
     register,
     handleSubmit,
-    reset,
     control,
-    formState: { errors },
+    formState: { errors }
   } = useForm<LoginInputs>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: "", password: "", rememberMe: false },
+    defaultValues: { email: "", password: "", rememberMe: false }
   })
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
-    login(data).then( (res) => {
+    login(data).then((res) => {
       if (res.data?.resultCode === ResultCode.Success) {
         localStorage.setItem(AUTH_TOKEN, res.data.data.token)
         dispatch(setIsLoggedIn({ isLoggedIn: true }))
@@ -49,7 +48,7 @@ export const Login = () => {
   }
 
   if (isLoggedIn) {
-    return <Navigate to={Path.Main}/>
+    return <Navigate to={Path.Main} />
   }
 
   return (
