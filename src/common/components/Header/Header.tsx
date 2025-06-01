@@ -1,4 +1,4 @@
-import {changeThemeModeAC, selectAppStatus, selectThemeMode} from "@/app/app-slice.ts"
+import { changeThemeModeAC, selectAppStatus, selectIsLoggedIn, selectThemeMode } from "@/app/app-slice.ts"
 import {useAppDispatch, useAppSelector} from "@/common/hooks"
 import {containerSx} from "@/common/styles"
 import {getTheme} from "@/common/theme"
@@ -11,7 +11,7 @@ import Switch from "@mui/material/Switch"
 import Toolbar from "@mui/material/Toolbar"
 import LinearProgress from "@mui/material/LinearProgress"
 import {ButtonLink} from "@/common/components/ButtonLink/ButtonLink";
-import {logoutTC, selectIsLoggedIn} from "@/features/auth/model/auth-slice";
+import {logoutTC} from "@/features/auth/model/auth-slice";
 import {clearDataAC} from "@/common/actions";
 
 export const Header = () => {

@@ -7,11 +7,6 @@ import {useAddTodolistMutation} from "@/features/todolists/api/todolistsApi";
 export const Main = () => {
 
     const [createTodolist] = useAddTodolistMutation()
-    // const dispatch = useAppDispatch()
-    // const createTodolist = (title: string) => {
-    //
-    //     dispatch(createTodolistTC(title))
-    // }
 
     return (
         <Container maxWidth={"lg"}>
