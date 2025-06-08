@@ -11,7 +11,8 @@ type Props = {
 
 export const Tasks = ({ todolist }: Props) => {
   const { id, filter } = todolist
-  const {data, isLoading} = useGetTasksQuery(id)
+  const {data, isLoading} = useGetTasksQuery(id);
+
 
   if (isLoading) {
     return <TasksSkeleton/>
