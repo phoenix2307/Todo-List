@@ -5,7 +5,9 @@ import {useGetTodolistsQuery} from "@/features/todolists/api/todolistsApi";
 
 export const Todolists = () => {
 
-    const {data} = useGetTodolistsQuery()
+    const {data, error} = useGetTodolistsQuery()
+
+
 
     return (
         <>

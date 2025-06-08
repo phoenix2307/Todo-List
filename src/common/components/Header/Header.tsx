@@ -17,10 +17,10 @@ import Switch from "@mui/material/Switch"
 import Toolbar from "@mui/material/Toolbar"
 import LinearProgress from "@mui/material/LinearProgress"
 import { ButtonLink } from "@/common/components/ButtonLink/ButtonLink"
-import { clearDataAC } from "@/common/actions"
 import { useLogoutMutation } from "@/features/auth/api/authApi.ts"
 import { ResultCode } from "@/common/enums"
 import { AUTH_TOKEN } from "@/common/constants"
+import { baseApi } from "@/app/baseApi.ts"
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -35,14 +35,15 @@ export const Header = () => {
     dispatch(changeThemeModeAC({ themeMode: themeMode === "light" ? "dark" : "light" }))
   }
 
-  const signOutHandler = () => {
-    logout().then(res => {
-      if (res.data?.resultCode === ResultCode.Success) {
-        localStorage.removeItem(AUTH_TOKEN)
-        dispatch(setIsLoggedIn({ isLoggedIn: false }))
-      }
-    })
-    dispatch(clearDataAC())
+  const logoutHandler = () => {
+    logout()
+      .then(res => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: false }))
+          localStorage.removeItem(AUTH_TOKEN)
+        }
+      })
+      .then(() => dispatch(baseApi.util.invalidateTags(["Todolist", "Task"])))
   }
 
   return (
@@ -73,7 +74,7 @@ export const Header = () => {
               404
             </ButtonLink>
             {/*//*/}
-            {isLoggedIn && <NavButton onClick={signOutHandler}>Logout</NavButton>}
+            {isLoggedIn && <NavButton onClick={logoutHandler}>Logout</NavButton>}
             <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
             <Switch color={"default"} onChange={changeMode} />
           </div>
