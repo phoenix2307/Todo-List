@@ -22,12 +22,12 @@ export const Tasks = ({ todolist }: Props) => {
 
   const [page, setPage] = useState(1)
 
-  const { data, isLoading, error, isFetching } = useGetTasksQuery({
+  const { data, isLoading, error } = useGetTasksQuery({
     todolistId: id,
     params: { page }
   })
 
-  console.log({ isLoading, isFetching })
+
 
   useEffect(() => {
     if (!error) return

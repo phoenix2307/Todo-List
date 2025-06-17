@@ -8,7 +8,10 @@ import { TodolistSkeleton } from "@/features/todolists/ui/Todolists/TodolistSkel
 
 export const Todolists = () => {
 
-  const { data, isLoading } = useGetTodolistsQuery()
+  const { data, isLoading } = useGetTodolistsQuery(undefined, {
+    pollingInterval: 3000,
+    skipPollingIfUnfocused: true,
+  })
 
   if (isLoading) {
     return (
