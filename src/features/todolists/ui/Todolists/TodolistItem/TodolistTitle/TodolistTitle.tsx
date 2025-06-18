@@ -18,28 +18,10 @@ type Props = {
 export const TodolistTitle = ({ todolist }: Props) => {
   const { id, title, entityStatus } = todolist
 
-  const [removeTodolist] = useDeleteTodolistMutation()
+  const [deleteTodolist] = useDeleteTodolistMutation()
   const [updateTodolistTitle] = useChangeTodolistTitleMutation()
 
-  const dispatch = useAppDispatch()
-  const changeTodolistStatus = (entityStatus: RequestStatus) => {
-    dispatch(
-      todolistsApi.util.updateQueryData("getTodolists", undefined, (state) => {
-        const todolist = state.find(tl => tl.id === id)
-        if (todolist) {
-          todolist.entityStatus = entityStatus
-        }
-      })
-    )
-  }
-
-  const deleteTodolist = () => {
-    changeTodolistStatus("loading")
-    removeTodolist(id)
-      .unwrap()
-      .catch(() => changeTodolistStatus("idle"))
-
-  }
+  const deleteTodolistHandler = () => deleteTodolist(id)
 
   const changeTodolistTitle = (title: string) => {
     updateTodolistTitle({ id, title })
@@ -50,7 +32,7 @@ export const TodolistTitle = ({ todolist }: Props) => {
       <h3>
         <EditableSpan value={title} onChange={changeTodolistTitle} />
       </h3>
-      <IconButton onClick={deleteTodolist} disabled={entityStatus === "loading"}>
+      <IconButton onClick={deleteTodolistHandler} disabled={entityStatus === "loading"}>
         <DeleteIcon />
       </IconButton>
     </div>
