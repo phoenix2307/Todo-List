@@ -2,21 +2,15 @@ import { EditableSpan } from "@/common/components"
 import DeleteIcon from "@mui/icons-material/Delete"
 import IconButton from "@mui/material/IconButton"
 import styles from "./TodolistTitle.module.css"
-import {
-  todolistsApi,
-  useChangeTodolistTitleMutation,
-  useDeleteTodolistMutation
-} from "@/features/todolists/api/todolistsApi"
-import { RequestStatus } from "@/common/types"
-import { useAppDispatch } from "@/common/hooks"
+import { useChangeTodolistTitleMutation, useDeleteTodolistMutation } from "@/features/todolists/api/todolistsApi"
 import { DomainTodolist } from "@/features/todolists/lib/types"
 
 type Props = {
   todolist: DomainTodolist
 }
-
+//todo: перенести відображення totalCount в правий кут у блоці todolistTitle. Перенести з TasksPagination.tsx
 export const TodolistTitle = ({ todolist }: Props) => {
-  const { id, title, entityStatus } = todolist
+  const { id, title} = todolist
 
   const [deleteTodolist] = useDeleteTodolistMutation()
   const [updateTodolistTitle] = useChangeTodolistTitleMutation()
@@ -32,7 +26,7 @@ export const TodolistTitle = ({ todolist }: Props) => {
       <h3>
         <EditableSpan value={title} onChange={changeTodolistTitle} />
       </h3>
-      <IconButton onClick={deleteTodolistHandler} disabled={entityStatus === "loading"}>
+      <IconButton onClick={deleteTodolistHandler}>
         <DeleteIcon />
       </IconButton>
     </div>

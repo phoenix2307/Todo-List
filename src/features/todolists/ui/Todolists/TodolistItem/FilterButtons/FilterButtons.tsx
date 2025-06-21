@@ -9,6 +9,7 @@ type Props = {
   todolist: DomainTodolist
 }
 
+//todo: пофіксити проблему - при фільтрації задач в одному туду, рендеряться всі тудуси
 export const FilterButtons = ({ todolist }: Props) => {
   const { id, filter } = todolist
 
