@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from "react"
 
 type Props = {
   captchaUrl: string
-  answerCallBack: () => void
+  answerCallBack: (answer: string) => void
 }
 
 export const Captcha = ({ captchaUrl, answerCallBack }: Props) => {
@@ -15,7 +15,7 @@ export const Captcha = ({ captchaUrl, answerCallBack }: Props) => {
 
   const sendAnswerHandler = () => {
 // запуск callback, який маємо отримати в пропсах
-    answerCallBack()
+    answerCallBack(answer)
   }
 
   return (

@@ -18,6 +18,7 @@ import { Path } from "@/common/routing"
 import { useLoginMutation } from "@/features/auth/api/authApi.ts"
 import { ResultCode } from "@/common/enums"
 import { AUTH_TOKEN } from "@/common/constants"
+import { Captcha } from "@/features/auth/ui/captcha/Captcha.tsx"
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -38,6 +39,10 @@ export const Login = () => {
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "", rememberMe: false }
   })
+
+  const answerCaptchaHandler = (value: string) => {
+    console.log(`answerCapthaHandler: ${value}`)
+  }
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
     login(data).then((res) => {
@@ -104,6 +109,8 @@ export const Login = () => {
             <Button type="submit" variant="contained" color="primary">
               Login
             </Button>
+
+            <Captcha captchaUrl={'sdfsdf'} answerCallBack={answerCaptchaHandler}/>
 
           </FormGroup>
         </FormControl>
