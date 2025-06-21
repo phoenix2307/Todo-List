@@ -12,7 +12,7 @@ export const appSlice = createSlice({
     status: "idle" as RequestStatus,
     error: null as string | null,
     isLoggedIn: false,
-    isCaptcha: null as string | null
+    isCaptcha: null as string | null,
   },
   selectors: {
     selectThemeMode: (state) => state.themeMode,

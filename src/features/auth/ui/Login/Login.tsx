@@ -1,4 +1,4 @@
-import { selectIsLoggedIn, selectThemeMode, setIsCaptchaAC, setIsLoggedIn } from "@/app/app-slice"
+import { selectIsCaptcha, selectIsLoggedIn, selectThemeMode, setIsCaptchaAC, setIsLoggedIn } from "@/app/app-slice"
 import { useAppDispatch, useAppSelector } from "@/common/hooks"
 import { getTheme } from "@/common/theme"
 import { type LoginInputs, loginSchema } from "@/features/auth/lib/schemas"
@@ -15,7 +15,7 @@ import { Controller, type SubmitHandler, useForm } from "react-hook-form"
 import styles from "./Login.module.css"
 import { Navigate } from "react-router"
 import { Path } from "@/common/routing"
-import { useLoginMutation } from "@/features/auth/api/authApi.ts"
+import { useFetchCaptchaQuery, useLoginMutation } from "@/features/auth/api/authApi.ts"
 import { ResultCode } from "@/common/enums"
 import { AUTH_TOKEN } from "@/common/constants"
 import { Captcha } from "@/features/auth/ui/captcha/Captcha.tsx"
@@ -24,9 +24,10 @@ export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
-
+  const captchaUrl: string | null = useAppSelector(selectIsCaptcha)
 
   const [login] = useLoginMutation()
+  const {data: fetchCaptcha} = useFetchCaptchaQuery()
 
   const dispatch = useAppDispatch()
 
@@ -51,8 +52,9 @@ export const Login = () => {
         dispatch(setIsLoggedIn({ isLoggedIn: true }))
       }
       if (res.data?.resultCode === ResultCode.CaptchaError) {
-          dispatch(setIsCaptchaAC({url: 'isCaptcha'}))
-        //todo: виправити url
+        if(fetchCaptcha){
+          dispatch(setIsCaptchaAC(fetchCaptcha))
+        }
       }
     })
   }
@@ -110,7 +112,7 @@ export const Login = () => {
               Login
             </Button>
 
-            <Captcha captchaUrl={'sdfsdf'} answerCallBack={answerCaptchaHandler}/>
+            <Captcha captchaUrl={captchaUrl} answerCallBack={answerCaptchaHandler}/>
 
           </FormGroup>
         </FormControl>

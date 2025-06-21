@@ -35,6 +35,7 @@ export const Header = () => {
     dispatch(changeThemeModeAC({ themeMode: themeMode === "light" ? "dark" : "light" }))
   }
   //=================================CAPTCHA=============
+  //todo: видалити кнопку запиту за captchaUrl
   const [fetchCaptcha] = useLazyFetchCaptchaQuery()
 
   const getCaptchaHandler = async () => {
