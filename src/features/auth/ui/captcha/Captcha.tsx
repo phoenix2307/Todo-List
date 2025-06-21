@@ -22,10 +22,9 @@ export const Captcha = ({ captchaUrl, answerCallBack }: Props) => {
     <div className={styles.captcha}>
       <div className={styles.image}>
         <img src={captchaUrl} alt="captcha-image" />
-        captcha-image
+        ---captcha-image
       </div>
       <div className={styles.answer}>
-        captcha-answer
         <input type="text" onChange={(e)=>onChangeHandler(e)}/>
         <button onClick={sendAnswerHandler}>send answer</button>
       </div>
