@@ -1,4 +1,4 @@
-import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from "@/app/app-slice"
+import { selectIsLoggedIn, selectThemeMode, setIsCaptchaAC, setIsLoggedIn } from "@/app/app-slice"
 import { useAppDispatch, useAppSelector } from "@/common/hooks"
 import { getTheme } from "@/common/theme"
 import { type LoginInputs, loginSchema } from "@/features/auth/lib/schemas"
@@ -24,6 +24,7 @@ export const Login = () => {
   const theme = getTheme(themeMode)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
+
   const [login] = useLoginMutation()
 
   const dispatch = useAppDispatch()
@@ -43,6 +44,10 @@ export const Login = () => {
       if (res.data?.resultCode === ResultCode.Success) {
         localStorage.setItem(AUTH_TOKEN, res.data.data.token)
         dispatch(setIsLoggedIn({ isLoggedIn: true }))
+      }
+      if (res.data?.resultCode === ResultCode.CaptchaError) {
+          dispatch(setIsCaptchaAC({url: 'isCaptcha'}))
+        //todo: виправити url
       }
     })
   }

@@ -3,19 +3,23 @@ import { createSlice, isFulfilled, isPending, isRejected } from "@reduxjs/toolki
 import { todolistsApi } from "@/features/todolists/api/todolistsApi.ts"
 import { tasksApi } from "@/features/todolists/api/tasksApi.ts"
 
+//todo: типізація isCaptcha: null as string | null, але типізація LoginInputs в Login.tsx, де ми прив'зуємо цю капчу, string | undefined (zod)
+
 export const appSlice = createSlice({
   name: "app",
   initialState: {
     themeMode: "dark" as ThemeMode,
     status: "idle" as RequestStatus,
     error: null as string | null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    isCaptcha: null as string | null
   },
   selectors: {
     selectThemeMode: (state) => state.themeMode,
     selectAppStatus: (state) => state.status,
     selectAppError: (state) => state.error,
-    selectIsLoggedIn: state => state.isLoggedIn
+    selectIsLoggedIn: state => state.isLoggedIn,
+    selectIsCaptcha: state => state.isCaptcha
   },
   extraReducers: (builder) => {
     builder
@@ -23,7 +27,7 @@ export const appSlice = createSlice({
         if (
           todolistsApi.endpoints.getTodolists.matchPending(action) ||
           tasksApi.endpoints.getTasks.matchPending(action)
-        ){
+        ) {
           return
         }
 
@@ -48,12 +52,21 @@ export const appSlice = createSlice({
     }),
     setIsLoggedIn: create.reducer<{ isLoggedIn: boolean }>((state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn
+    }),
+    setIsCaptchaAC: create.reducer<{ url: string }>((state, action) => {
+      state.isCaptcha = action.payload.url
     })
   })
 })
 
-export const { selectThemeMode, selectAppStatus, selectAppError, selectIsLoggedIn } = appSlice.selectors
-export const { changeThemeModeAC, setAppStatusAC, setAppErrorAC, setIsLoggedIn } = appSlice.actions
+export const {
+  selectThemeMode,
+  selectAppStatus,
+  selectAppError,
+  selectIsLoggedIn,
+  selectIsCaptcha
+} = appSlice.selectors
+export const { changeThemeModeAC, setAppStatusAC, setAppErrorAC, setIsLoggedIn, setIsCaptchaAC } = appSlice.actions
 export const appReducer = appSlice.reducer
 
 export type ThemeMode = "dark" | "light"
