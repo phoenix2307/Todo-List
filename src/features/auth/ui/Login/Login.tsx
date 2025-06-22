@@ -25,6 +25,10 @@ export const Login = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const captchaUrl = useAppSelector(selectIsCaptcha)
 
+//todo: 1. якщо ми проходимо капчу, а потім робито logout ми потрапляємо на сторінку логінізації з пустими полями вводу, але при цьому вже є СТАРА картинка капчі. Якщо сторінку перезавантажити, вона пропадає
+
+  //todo: 2. логінізація: якщо у нас вискочила капча, то окрім неї ми бачимо вікно логіна та паролю, які також треба ввести правильно. Потрібно розділити ці два вікна. Або капча, або логін
+
   const [login] = useLoginMutation()
   const [fetchCaptchaTrigger] = useLazyFetchCaptchaQuery()
 
