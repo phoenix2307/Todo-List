@@ -24,14 +24,7 @@ export const authApi = baseApi.injectEndpoints({
     fetchCaptcha: build.query<{url: string}, void>({
       query: () => 'security/get-captcha-url',
     }),
-    captchaValidate: build.mutation<any, LoginInputs>({
-      query: (body: LoginInputs)=> ({
-        url: "auth/login",
-        method: "POST",
-        body
-      })
-    }),
   })
 })
 
-export const { useMeQuery, useLoginMutation, useLogoutMutation, useFetchCaptchaQuery, useLazyFetchCaptchaQuery } = authApi
+export const { useMeQuery, useLoginMutation, useLogoutMutation, useLazyFetchCaptchaQuery } = authApi

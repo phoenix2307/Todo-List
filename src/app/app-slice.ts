@@ -3,8 +3,6 @@ import { createSlice, isFulfilled, isPending, isRejected } from "@reduxjs/toolki
 import { todolistsApi } from "@/features/todolists/api/todolistsApi.ts"
 import { tasksApi } from "@/features/todolists/api/tasksApi.ts"
 
-//todo: типізація isCaptcha: null as string | null, але типізація LoginInputs в Login.tsx, де ми прив'зуємо цю капчу, string | undefined (zod)
-
 export const appSlice = createSlice({
   name: "app",
   initialState: {

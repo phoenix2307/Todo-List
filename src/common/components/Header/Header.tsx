@@ -17,7 +17,7 @@ import Switch from "@mui/material/Switch"
 import Toolbar from "@mui/material/Toolbar"
 import LinearProgress from "@mui/material/LinearProgress"
 import { ButtonLink } from "@/common/components/ButtonLink/ButtonLink"
-import { useLazyFetchCaptchaQuery, useLogoutMutation } from "@/features/auth/api/authApi.ts"
+import { useLogoutMutation } from "@/features/auth/api/authApi.ts"
 import { ResultCode } from "@/common/enums"
 import { AUTH_TOKEN } from "@/common/constants"
 import { baseApi } from "@/app/baseApi.ts"
@@ -34,16 +34,7 @@ export const Header = () => {
   const changeMode = () => {
     dispatch(changeThemeModeAC({ themeMode: themeMode === "light" ? "dark" : "light" }))
   }
-  //=================================CAPTCHA=============
-  //todo: видалити кнопку запиту за captchaUrl
-  const [fetchCaptcha] = useLazyFetchCaptchaQuery()
 
-  const getCaptchaHandler = async () => {
-    const response = await fetchCaptcha().unwrap()
-    console.log("Full captcha response:", response) // Логуємо всю відповідь
-    console.log("captcha url:", response.url) // Логуємо url
-  }
-  //=====================================================
   const logoutHandler = () => {
     logout()
       .then(res => {
@@ -63,15 +54,6 @@ export const Header = () => {
             <MenuIcon />
           </IconButton>
           <div>
-            {/*=============для тестування отримання капчі===============*/}
-
-            <button style={{ width: "90px", height: "40px" }}
-                    onClick={getCaptchaHandler}
-            >get captchaUrl
-            </button>
-
-            {/*=========================================================*/}
-
             <ButtonLink
               href={"/login"}
               buttonProps={{
