@@ -3,7 +3,7 @@ import {
   selectAppStatus,
   selectIsLoggedIn,
   selectThemeMode,
-  setIsLoggedIn
+  setIsLoggedIn,
 } from "@/app/app-slice.ts"
 import { useAppDispatch, useAppSelector } from "@/common/hooks"
 import { containerSx } from "@/common/styles"
@@ -16,7 +16,6 @@ import IconButton from "@mui/material/IconButton"
 import Switch from "@mui/material/Switch"
 import Toolbar from "@mui/material/Toolbar"
 import LinearProgress from "@mui/material/LinearProgress"
-import { ButtonLink } from "@/common/components/ButtonLink/ButtonLink"
 import { useLogoutMutation } from "@/features/auth/api/authApi.ts"
 import { ResultCode } from "@/common/enums"
 import { AUTH_TOKEN } from "@/common/constants"
@@ -37,7 +36,7 @@ export const Header = () => {
 
   const logoutHandler = () => {
     logout()
-      .then(res => {
+      .then((res) => {
         if (res.data?.resultCode === ResultCode.Success) {
           dispatch(setIsLoggedIn({ isLoggedIn: false }))
           localStorage.removeItem(AUTH_TOKEN)
@@ -54,24 +53,24 @@ export const Header = () => {
             <MenuIcon />
           </IconButton>
           <div>
-            <ButtonLink
-              href={"/login"}
-              buttonProps={{
-                variant: "contained",
-                color: "inherit"
-              }}
-            >
-              Login
-            </ButtonLink>
-            <ButtonLink
-              href={"*"}
-              buttonProps={{
-                variant: "contained",
-                color: "inherit"
-              }}
-            >
-              404
-            </ButtonLink>
+            {/*<ButtonLink*/}
+            {/*  href={"/login"}*/}
+            {/*  buttonProps={{*/}
+            {/*    variant: "contained",*/}
+            {/*    color: "inherit"*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  Login*/}
+            {/*</ButtonLink>*/}
+            {/*<ButtonLink*/}
+            {/*  href={"*"}*/}
+            {/*  buttonProps={{*/}
+            {/*    variant: "contained",*/}
+            {/*    color: "inherit"*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  404*/}
+            {/*</ButtonLink>*/}
             {/*//*/}
             {isLoggedIn && <NavButton onClick={logoutHandler}>Logout</NavButton>}
             <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
