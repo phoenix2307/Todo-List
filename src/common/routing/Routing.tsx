@@ -8,7 +8,7 @@ import { selectIsLoggedIn } from "@/app/app-slice.ts"
 
 export const Path = {
     Main: "/",
-    Login: "login",
+    Login: "/login",
     Faq: "/faq",
     NotFound: "*",
 } as const
